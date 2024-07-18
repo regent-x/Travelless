@@ -1,7 +1,8 @@
 const express = require('express')
 const { engine } = require('express-handlebars')
-
+const logger = require('morgan')
 const port = process.env.PORT
+
 
 const app = express()
 
@@ -10,6 +11,14 @@ app.engine('handlebars', engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 app.set('views', './views')
 app.set(express.static(__dirname+ '/public'))
+
+switch (process.env.ENV){
+    case 'prod':
+        app.use(logger('prod'))
+        break
+    default:
+        app.use(logger('dev'))
+}
 
 app.get("/", (req, res)=>{
     res.render("home")

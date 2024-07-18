@@ -1,0 +1,16 @@
+{
+  "name": "travelless",
+  "version": "1.0.0",
+  "description": "a travel website",
+  "main": "travel.js",
+  "scripts": {
+    "test": "tape test/**/*js",
+    "dev": "nodemon travel"
+  },
+  "author": "whenGodcodes",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.3"
+  }
+}

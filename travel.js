@@ -1,36 +1,33 @@
 const express = require('express')
-const { engine } =require('express-handlebars')
+const { engine } = require('express-handlebars')
 
 const port = process.env.PORT
 
 const app = express()
 
-app.engine('handlebars', engine())
+app.engine('handlebars', engine({defaultLayout: 'main'}))
+
 app.set('view engine', 'handlebars')
-app.set('view', './view')
+app.set('views', './views')
+app.set(express.static(__dirname+ '/public'))
 
 app.get("/", (req, res)=>{
-    res.type("text/plain")
-    res.status(404)
-    res.send("Travelless Homepage")
+    res.render("home")
 })
 
 app.get("/about", (req, res)=>{
-    res.type("text/plain")
-    res.send("about travelless")
+    res.render("about")
 })
 
 app.use((req, res)=>{
-    res.type("text/plain")
-    res.status(404)
-    res.send("404 - status not found")
+    res.status(500)
+    res.render('404')
 })
 
 app.use((err, req, res, next)=>{
     console.log(err.message)
-    res.type("text/plain")
     res.status(500)
-    res.send("500 - Internal Server Error")
+    res.render('500')
 })
 
 app.listen(port, ()=>{
